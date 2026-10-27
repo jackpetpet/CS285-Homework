@@ -1,4 +1,4 @@
-实验1：CartPole
+##实验1：CartPole
 
 1.哪种价值估计器在没有优势归一化的情况下表现更好：以轨迹为中心的，还是使用回报的？
 
@@ -20,7 +20,7 @@
 
 <img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/496f2dff-da0e-46a4-baac-09fd824d062a" />
 
-实验2：HalfCheetah
+##实验2：HalfCheetah
 
 <img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/44675d73-19f2-4bdd-a535-895aa2e8f401" />
 
@@ -37,7 +37,7 @@ rate (-blr). How does this affect (a) the baseline learning curve and (b) the pe
 
 <img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/c4ead65b-8946-4742-b6ff-30d98bcb8c99" />
 
-实验3：Implementing Generalized Advantage Estimation
+##实验3：Implementing Generalized Advantage Estimation
 
 <img width="1200" height="700" alt="image" src="https://github.com/user-attachments/assets/724ae107-fb56-4cae-b753-ebf473314961" />
 
@@ -47,7 +47,7 @@ rate (-blr). How does this affect (a) the baseline learning curve and (b) the pe
 
 λ=1 对应的是蒙特卡洛（Monte Carlo）优势估计（即完全依赖真实环境采样的回报，具有低偏差、极高方差）
 
-实验4：Hyperparameters and Sample Efficiency
+##实验4：Hyperparameters and Sample Efficiency
 
 <img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/29f2dd99-b366-4ff1-9165-8d94a66c623e" />
 
