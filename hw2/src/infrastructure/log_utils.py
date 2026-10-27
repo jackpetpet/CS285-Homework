@@ -42,9 +42,20 @@ class Logger:
         self.rows.append(copy.deepcopy(row))
 
     def log_trajs_as_videos(self, trajs, step, max_videos_to_save=2, fps=10, video_title='video'):
+        import imageio  # 需要导入这个库来保存视频
+
+        # 只取前 max_videos_to_save 个轨迹的图片
         videos = [traj['image_obs'] for traj in trajs][:max_videos_to_save]
-        video = get_wandb_video(videos, fps=fps)
-        wandb.log({video_title: video}, step=step)
+
+        for i, frames in enumerate(videos):
+            # 拼接成文件名，保存在当前目录下
+            filename = f"video_step_{step}_ep{i}.mp4"
+
+            # 用 imageio 直接保存为 mp4
+            # 注意：frames 是 numpy 数组，格式是 (T, H, W, C)
+            imageio.mimsave(filename, frames, fps=fps)
+
+        print(f"✅ 视频已保存到当前目录：video_step_{step}_*.mp4")
 
     def close(self):
         if self.file is not None:
@@ -105,29 +116,25 @@ def setup_wandb(
     mode='online',
     config=None,
 ):
-    """Set up Weights & Biases for logging."""
-    wandb_output_dir = tempfile.mkdtemp()
-    tags = [group] if group is not None else None
+    """Set up Weights & Biases for logging (DISABLED FOR OFFLINE RUN)."""
+    print("⚠️ WARNING: WandB is manually disabled by modifying setup_wandb.")
 
-    init_kwargs = dict(
-        config=config,
-        project=project,
-        entity=entity,
-        tags=tags,
-        group=group,
-        dir=wandb_output_dir,
-        name=name,
-        settings=wandb.Settings(
-            start_method='thread',
-            _disable_stats=False,
-        ),
-        mode=mode,
-        save_code=True,
-    )
+    # 创建一个假对象，拦截所有关于 wandb 的调用
+    class DummyRun:
+        def __init__(self):
+            pass
 
-    run = wandb.init(**init_kwargs)
+        def log(self, *args, **kwargs):
+            pass
 
-    return run
+        def finish(self, *args, **kwargs):
+            pass
+
+        def log_artifact(self, *args, **kwargs):
+            pass
+
+    return DummyRun()
+
 
 
 def reshape_video(v, n_cols=None):
