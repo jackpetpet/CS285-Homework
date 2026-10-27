@@ -31,7 +31,8 @@ def sample_trajectory(
 
         ac = policy.get_action(ob)
 
-        next_ob, rew, done, info = env.step(ac)
+        next_ob, rew, terminated, truncated, info = env.step(ac)
+        done = terminated or truncated
 
         steps += 1
         rollout_done = done or (steps >= max_length)
