@@ -149,7 +149,9 @@ class PGAgent(nn.Module):
         if self.critic is None:
             advantages = q_values
         else:
-            values = self.critic.predict(obs)
+            obs_tensor = ptu.from_numpy(obs)
+            values = self.critic(obs_tensor)
+            values = ptu.to_numpy(values).squeeze(-1)
             assert values.shape == q_values.shape
 
             if self.gae_lambda is None:
